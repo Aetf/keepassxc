@@ -2,23 +2,29 @@
 
 This is a very hacky implementation of AutoType on Wayland.
 Because there is no standard interfaces to simulate user input or enumerate windows,
-this implementation directly talks to KWin using `KWayland`, which implements several
-wayland extension that has these feature.
+this implementation directly talks to KWin using `KWayland`, to make use of several
+KWin wayland extensions.
 
-This however does not mess with uinput directly or require root permission,
-and everything will just work if you are under KWin.
+This however has the benefit not messing with uinput directly
+and everything will just work if you are using KWin.
 
-The code should be general enough to handle protocols in other window managers should
+The code should be general enough to handle protocols in other Wayland compositor should
 they implement and expose something similar.
 
+## Implemented features
+
+* Current keyboard state is considered and restored when sending modifiers.
+* Keymap is updated from the compositor automatically. No need to manually config.
+* Enumeration of window titles and active window.
+* No root permission or special permission configuration is needed.
 
 ## limitations
 
-* Only works with KWin, due to the use KWin specific wayland extensions
+* Only works with KWin, due to the use of KWin specific wayland extensions
 * Uncommon chars probably will not work. Anything that can not be directly entered on
-keyboard beyond SHIFT is untested and likely doesn't work.
+a US 101 keyboard is untested and likely doesn't work.
 
-## Required feature from compositor
+## Required features from the compositor
 
 | Compositor | Input Simulation | Window enumeration |
 | :--------: | :--------------: | :----------------: |
